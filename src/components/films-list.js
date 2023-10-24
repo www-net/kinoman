@@ -24,10 +24,10 @@ export default class FilmsList {
     return cardsMarkup;
   }
 
-  getShowMore() {
+  getShowMoreBtn() {
     // По-хорошему, тут должно проверяться
     // количество выводимых карточек, а не тип
-    if (this.type !== `upcoming`) {
+    if (!this.isUpcoming) {
       return ``;
     }
 
@@ -39,7 +39,7 @@ export default class FilmsList {
   getClassName() {
     let className = this.className;
 
-    if (this.isUpcoming) {
+    if (!this.isUpcoming) {
       className += ` ${this.className}--${this.type}`;
     }
 
@@ -62,14 +62,14 @@ export default class FilmsList {
 
   getTmpl() {
 
-    return (`
-      <section class="${this.getClassName()}">
+    return (
+      `<section class="${this.getClassName()}">
         ${this.getTitle()}
         <div class="films-list__container">
           ${this.getCards()}
         </div>
-        ${this.getShowMore()}
-      </section>
-    `);
+        ${this.getShowMoreBtn()}
+      </section>`
+    );
   }
 }
