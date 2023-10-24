@@ -15,19 +15,10 @@ const siteMainElem = document.querySelector(`.main`);
 const siteFooterElem = document.querySelector(`.footer`);
 
 const profile = new Profile();
-const profileTmpl = profile.getTmpl();
-
 const menu = new Menu();
-const menuTmpl = menu.getTmpl();
-
 const sort = new Sort();
-const sortTmpl = sort.getTmpl();
-
 const details = new Details();
-const detailsTmpl = details.getTmpl();
-
 const statistics = new Statistics();
-const statisticsTmpl = statistics.getTmpl();
 
 // Данные для создания секций под фильмы
 const filmsSectionsData = [
@@ -69,9 +60,9 @@ const render = (container, template) => {
   container.insertAdjacentHTML(`beforeend`, template);
 };
 
-render(siteHeaderElem, profileTmpl);
-render(siteMainElem, menuTmpl);
-render(siteMainElem, sortTmpl);
+render(siteHeaderElem, profile.getTmpl());
+render(siteMainElem, menu.getTmpl());
+render(siteMainElem, sort.getTmpl());
 render(siteMainElem, getFilmsTmpl());
-render(siteFooterElem, statisticsTmpl);
-render(document.body, detailsTmpl);
+render(siteFooterElem, statistics.getTmpl());
+render(document.body, details.getTmpl());
