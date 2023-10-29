@@ -1,10 +1,11 @@
 import Card from './card';
 
 export default class FilmsList {
-  constructor({type, title, quantity}) {
+  constructor({type, title, quantity, films}) {
     this.type = type;
     this.title = title;
     this.quantity = quantity;
+    this.films = films;
     this.className = `films-list`;
     this.isUpcoming = this.type === `upcoming`;
   }
@@ -12,11 +13,11 @@ export default class FilmsList {
   getCards() {
     let cardsMarkup = ``;
 
-    for (let i = 0; i < this.quantity; i++) {
+    for (const film of this.films) {
       // Предполагается, что у каждой карточки
       // будет своё содержимое, и в конструктор
       // будет подаваться объект с данными
-      const card = new Card();
+      const card = new Card(film);
 
       cardsMarkup += card.getTmpl();
     }

@@ -96,6 +96,7 @@ const getRandomNames = (min, max) => {
   return list;
 };
 
+// Данные карточки фильма
 const getCardsData = (quantity) => {
   const data = [];
 

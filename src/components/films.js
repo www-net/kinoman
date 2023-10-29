@@ -26,9 +26,19 @@ const filmsSectionsData = [
 
 // Создать списки фильмов
 export default class Films {
+
+  // принимает массив объектов с данными для генерации карточек
+  constructor(data) {
+    this.data = data;
+  }
+
   getTmpl() {
     const filmsSections = filmsSectionsData
       .reduce((prev, data) => {
+        // добавить свойство films в данные для создания секций (filmsSectionsData)
+        // содержащий массив с нужным количеством объектов для генерации карточек
+        data.films = this.data.splice(0, data.quantity);
+
         const filmsSection = new FilmsList(data);
         return prev + filmsSection.getTmpl();
       }, ``);
