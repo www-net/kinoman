@@ -1,9 +1,11 @@
 import {POSTERS, EMOJI, TITLES, SENTENCES, GENRES, NAMES, AGE_RATINGS, COUNTRIES} from '../const.js';
 
+// Выбор рандомного элемента из массива
 const getRandomItem = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
 
+// Вывод рандомного текста
 const getDesc = () => {
   const quantity = Math.floor(Math.random() * SENTENCES.length);
   let desc = ``;
@@ -15,6 +17,7 @@ const getDesc = () => {
   return desc;
 };
 
+// Продолжительность фильма
 const getRandomDuration = () => {
   const hours = Math.floor(Math.random() * 2) + 1;
   const mins = Math.floor(Math.random() * 60);
@@ -24,12 +27,14 @@ const getRandomDuration = () => {
   };
 };
 
+// Рейтинг
 const getRandomRating = () => {
   const rating = Math.random() * 10;
 
   return +rating.toFixed(1);
 };
 
+// Дата
 const getRandomDate = (sizeOffset = `month`) => {
   const now = new Date();
   const offset = Math.floor(Math.random() * 30);
@@ -43,6 +48,7 @@ const getRandomDate = (sizeOffset = `month`) => {
   return now;
 };
 
+// Комментарий
 const getRandomComments = () => {
   const quantity = Math.floor(Math.random() * 5);
   const list = [];
@@ -64,6 +70,7 @@ const getRandomComments = () => {
   return list;
 };
 
+// Описание фильма
 const getShortDesc = (desc) => {
   if (desc.length < 140) {
     return desc;
@@ -77,6 +84,7 @@ const getShortDesc = (desc) => {
   return `${desc}&hellip;`;
 };
 
+// Имена
 const getRandomNames = (min, max) => {
   const quantity = Math.floor(Math.random() * (max - min)) + min;
   const list = new Set();
