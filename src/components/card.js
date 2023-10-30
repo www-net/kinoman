@@ -1,5 +1,6 @@
 import {getClass} from '../helpers/getClass';
 import {getRuntime} from '../helpers/getRuntime';
+import {getFilmControlsData} from '../helpers/getFilmControlsData';
 
 export default class Card {
 
@@ -28,27 +29,13 @@ export default class Card {
     this.isInWatchList = isInWatchList;
     this.isWatched = isWatched;
     this.isFavorite = isFavorite;
-  }
 
-  // Данные для контролов карточки
-  getControlsList() {
-    return [
-      {
-        id: `add-to-watchlist`,
-        text: `Add to watchlist`,
-        isActive: this.isInWatchList
-      },
-      {
-        id: `mark-as-watched`,
-        text: `Mark as watched`,
-        isActive: this.isWatched
-      },
-      {
-        id: `favorite`,
-        text: `Mark as favorite`,
-        isActive: this.isFavorite
-      }
-    ];
+    // Данные для контролов карточки
+    this.controlsData = getFilmControlsData({
+      isInWatchList,
+      isWatched,
+      isFavorite,
+    });
   }
 
   // Создание контрола
@@ -69,9 +56,8 @@ export default class Card {
 
   // Добавление контролов в форму карточки
   getCardForm() {
-    const controlsList = this.getControlsList();
-
-    let controlsMarkup = controlsList.reduce((prev, control) => prev + this.getCardControl(control), ``);
+    let controlsMarkup = this.controlsData
+      .reduce((prev, control) => prev + this.getCardControl(control), ``);
 
     return (
       `<form class="film-card__controls">
