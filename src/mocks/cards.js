@@ -93,7 +93,19 @@ const getRandomNames = (min, max) => {
     list.add(getRandomItem(NAMES));
   }
 
-  return list;
+  return Array.from(list);
+};
+
+// Жанры
+const getRandomGenres = () => {
+  const quantity = Math.floor(Math.random() * 3) + 1;
+  const list = new Set();
+
+  while (list.size < quantity) {
+    list.add(getRandomItem(GENRES));
+  }
+
+  return Array.from(list);
 };
 
 // Данные карточки фильма
@@ -106,7 +118,7 @@ const getCardsData = (quantity) => {
     const origTitle = getRandomItem(TITLES);
     const desc = getDesc();
     const shortDesc = getShortDesc(desc);
-    const genre = getRandomItem(GENRES);
+    const genres = getRandomGenres();
     const releaseDate = getRandomDate(`years`);
     const runtime = getRandomDuration();
     const rating = getRandomRating();
@@ -126,7 +138,7 @@ const getCardsData = (quantity) => {
       origTitle,
       desc,
       shortDesc,
-      genre,
+      genres,
       releaseDate,
       runtime,
       rating,

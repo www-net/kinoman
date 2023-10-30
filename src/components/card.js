@@ -7,7 +7,7 @@ export default class Card {
     poster,
     title,
     shortDesc,
-    genre,
+    genres,
     releaseDate,
     runtime,
     rating,
@@ -20,7 +20,7 @@ export default class Card {
     this.poster = poster;
     this.title = title;
     this.shortDesc = shortDesc;
-    this.genre = genre;
+    this.genre = genres[0];
     this.year = releaseDate.getFullYear();
     this.runtime = getRuntime(runtime);
     this.rating = rating;
@@ -88,7 +88,7 @@ export default class Card {
         <p class="film-card__rating">${this.rating}</p>
         <p class="film-card__info">
           <span class="film-card__year">${this.year}</span>
-          <span class="film-card__duration">${this.duration}</span>
+          <span class="film-card__duration">${this.runtime}</span>
           <span class="film-card__genre">${this.genre}</span>
         </p>
         <img src="./images/posters/${this.poster}" alt="" class="film-card__poster">
