@@ -9,10 +9,10 @@ const POSTERS = [
 ];
 
 const EMOJI = [
-  `angry.png`,
-  `puke.png`,
-  `sleeping.png`,
-  `smile.png`,
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`,
 ];
 
 const TITLES = [
@@ -92,6 +92,21 @@ const COUNTRIES = [
   `Nepal`,
 ];
 
+const MONTH_NAMES = [
+  `January`,
+  `February`,
+  `March`,
+  `April`,
+  `May`,
+  `June`,
+  `July`,
+  `August`,
+  `September`,
+  `October`,
+  `November`,
+  `December`,
+];
+
 const MAX_CARDS = 23;
 const MAX_CARDS_LOAD = 20;
 
@@ -104,6 +119,7 @@ export {
   NAMES,
   AGE_RATINGS,
   COUNTRIES,
+  MONTH_NAMES,
   MAX_CARDS,
   MAX_CARDS_LOAD
 };
