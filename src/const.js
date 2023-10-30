@@ -92,21 +92,6 @@ const COUNTRIES = [
   `Nepal`,
 ];
 
-const MONTH_NAMES = [
-  `January`,
-  `February`,
-  `March`,
-  `April`,
-  `May`,
-  `June`,
-  `July`,
-  `August`,
-  `September`,
-  `October`,
-  `November`,
-  `December`,
-];
-
 const MAX_CARDS = 23;
 const MAX_CARDS_LOAD = 20;
 
