@@ -1,4 +1,5 @@
 const path = require(`path`);
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     mode: `development`, // Режим сборки
@@ -11,5 +12,8 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, `public`), // Где искать сборку
         watchContentBase: true,
-    }
+    },
+    plugins: [
+      new MomentLocalesPlugin()
+    ]
 }
