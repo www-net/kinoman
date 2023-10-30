@@ -147,8 +147,8 @@ const getCardsData = (quantity) => {
       country,
       director,
       writers,
-      isInWatchList,
       actors,
+      isInWatchList,
       isWatched,
       isFavorite
     });
