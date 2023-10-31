@@ -1,8 +1,7 @@
-import moment from 'moment';
 import {getRuntime} from '../helpers/getRuntime';
 import {getFullDate, getRelativeDate} from '../helpers/getDateTime.js';
 import {getFilmControlsData} from '../helpers/getFilmControlsData';
-import {EMOJI} from '../const';
+import {EMOJI, AGE_RATINGS} from '../const';
 
 export default class Details {
   constructor({
@@ -64,7 +63,7 @@ export default class Details {
     return (
       `<div class="film-details__poster">
         <img class="film-details__poster-img" src="./images/posters/${this.poster}" alt="">
-        <p class="film-details__age">${this.ageRating}</p>
+        <p class="film-details__age" title="${AGE_RATINGS[this.ageRating]}">${this.ageRating}</p>
       </div>`
     );
   }
