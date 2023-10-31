@@ -145,7 +145,7 @@ export default class Details {
 
   getTmpl() {
     return (
-      `<section class="film-details" _hidden>
+      `<section class="film-details" hidden>
         <form class="film-details__inner" action="" method="get">
           <div class="form-details__top-container">
             <div class="film-details__close">
