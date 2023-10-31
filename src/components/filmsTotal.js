@@ -1,4 +1,4 @@
-export default class Statistics {
+export default class FilmsTotal {
   constructor(counter) {
     this.counter = counter;
   }
