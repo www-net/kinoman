@@ -1,3 +1,5 @@
+import {createElement} from '../helpers/createElement';
+
 export default class UserStats {
   constructor({status, avatar, watchedQuantity, watchedDuration, topGenre}) {
     this.status = status;
@@ -123,8 +125,8 @@ export default class UserStats {
     }, ``);
   }
 
-  getTmpl() {
-    return (
+  getElement() {
+    return createElement(
       `<section class="statistic" _hidden>
         ${this.getRank()}
         ${this.getFilter()}

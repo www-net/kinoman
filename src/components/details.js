@@ -4,6 +4,8 @@ import {getFilmControlsData} from '../helpers/getFilmControlsData';
 import {getPlurals} from '../helpers/getPlurals';
 import {AGE_RATINGS} from '../const';
 import Comments from './comments';
+import {createElement} from '../helpers/createElement';
+
 
 export default class Details {
   constructor({
@@ -165,8 +167,8 @@ export default class Details {
     return comments.getTmpl();
   }
 
-  getTmpl() {
-    return (
+  getElement() {
+    return createElement(
       `<section class="film-details" hidden>
         <form class="film-details__inner" action="" method="get">
           <div class="form-details__top-container">
