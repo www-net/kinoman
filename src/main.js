@@ -1,4 +1,4 @@
-import {TOTAL_FILMS} from './constants.js';
+import {TOTAL_FILMS} from './mocks/constants.js';
 
 import Profile from './components/profile';
 import Filter from './components/filter.js';
