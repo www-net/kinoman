@@ -43,6 +43,8 @@ export default class Details {
       isWatched,
       isFavorite,
     });
+
+    this.section = createElement();
   }
 
   getGenresMarkup() {
@@ -162,7 +164,7 @@ export default class Details {
     return comments.getTmpl();
   }
 
-  getElement() {
+  createElement() {
     const markup = `<section class="film-details" hidden>
     <form class="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
@@ -193,5 +195,9 @@ export default class Details {
   </section>`;
 
     return createElement(markup);
+  }
+
+  getElement() {
+    return this.section;
   }
 }
