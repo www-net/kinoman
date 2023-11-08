@@ -99,18 +99,6 @@ const getRandomList = (list, min, max) => {
   return Array.from(list);
 };
 
-// Жанры
-const getRandomGenres = () => {
-  const quantity = Math.floor(Math.random() * 3) + 1;
-  const list = new Set();
-
-  while (list.size < quantity) {
-    list.add(getRandomItem(GENRES));
-  }
-
-  return Array.from(list);
-};
-
 // Данные карточки фильма
 const getCardsData = (quantity) => {
   const data = [];
