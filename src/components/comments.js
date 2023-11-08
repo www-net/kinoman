@@ -50,7 +50,7 @@ export default class Comments {
   }
 
   getEmojiControls() {
-    let emojiControls = EMOJI.reduce((prev, item) => {
+    const emojiControls = EMOJI.reduce((prev, item) => {
       return prev + this.getEmojiControl(item);
     }, ``);
 

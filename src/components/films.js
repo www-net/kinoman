@@ -53,7 +53,7 @@ export default class Films {
   }
 
   getElement() {
-    for (let section of this.getSectionsData()) {
+    for (const section of this.getSectionsData()) {
       const filmsSection = new FilmsList(section);
       this.elem.append(filmsSection.getElement());
     }
