@@ -1,5 +1,5 @@
 import FilmsList from "./films-list";
-import {MAX_CARDS_TOP} from '../const';
+import {MAX_CARDS_TOP} from '../constants';
 import {createElement} from '../helpers';
 
 // Создать списки фильмов
