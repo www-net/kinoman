@@ -46,7 +46,9 @@ export default class Card {
       mods
     });
 
-    return `<button class="${className}">${text}</button>`;
+    return (
+      `<button class="${className}">${text}</button>`
+    );
   }
 
   // Добавление контролов в форму карточки
@@ -64,7 +66,9 @@ export default class Card {
   // Добавить множественное число комментариев в карточке
   getCommentsLink() {
     const commentsText = getPlurals(this.commentsCount, [`comment`, `comments`]);
-    return `<a class="film-card__comments">${this.commentsCount} ${commentsText}</a>`;
+    return (
+      `<a class="film-card__comments">${this.commentsCount} ${commentsText}</a>`
+    );
   }
 
   // Шаблон карточки
