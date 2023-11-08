@@ -1,4 +1,4 @@
-import {getClass, getRuntime, getFilmControlsData, createElement} from '../helpers';
+import {getClass, getRuntime, getFilmControlsData, createElement, getPlurals} from '../helpers';
 
 export default class Card {
 
@@ -64,6 +64,12 @@ export default class Card {
     );
   }
 
+  // Добавить множественное число комментариев в карточке
+  getCommentsLink() {
+    const commentsText = getPlurals(this.commentsCount, [`comment`, `comments`]);
+    return `<a class="film-card__comments">${this.commentsCount} ${commentsText}</a>`;
+  }
+
   // Шаблон карточки
   getElement() {
 
@@ -77,9 +83,10 @@ export default class Card {
     </p>
     <img src="./images/posters/${this.poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${this.shortDesc}</p>
-    <a class="film-card__comments">${this.commentsCount} comments</a>
+    ${this.getCommentsLink()}
+
     ${this.getCardForm()}
-  </article>`
+  </article>`;
 
     return createElement(markup);
   }
