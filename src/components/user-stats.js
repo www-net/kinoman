@@ -126,17 +126,17 @@ export default class UserStats {
   }
 
   getElement() {
-    return createElement(
-      `<section class="statistic" _hidden>
-        ${this.getRank()}
-        ${this.getFilter()}
-        <ul class="statistic__text-list">
-          ${this.getStatisticsItems()}
-        </ul>
-        <div class="statistic__chart-wrap">
-          <canvas class="statistic__chart" width="1000"></canvas>
-        </div>
-      </section>`
-    );
+    const markup = `<section class="statistic" _hidden>
+    ${this.getRank()}
+    ${this.getFilter()}
+    <ul class="statistic__text-list">
+      ${this.getStatisticsItems()}
+    </ul>
+    <div class="statistic__chart-wrap">
+      <canvas class="statistic__chart" width="1000"></canvas>
+    </div>
+  </section>`;
+
+    return createElement(markup);
   }
 }

@@ -102,14 +102,13 @@ export default class FilmsList {
     if (this.films.length === 0) {
       return ``;
     }
+    const markup = `<section class="${this.getClassName()}">
+    ${this.getTitle()}
+    <div class="films-list__container"></div>
+    ${this.getShowMoreBtn()}
+  </section>`;
 
-    return createElement(
-      `<section class="${this.getClassName()}">
-        ${this.getTitle()}
-        <div class="films-list__container"></div>
-        ${this.getShowMoreBtn()}
-      </section>`
-    );
+    return createElement(markup);
   }
 
   getElement() {
