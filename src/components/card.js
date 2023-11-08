@@ -24,9 +24,6 @@ export default class Card {
     this.runtime = getRuntime(runtime);
     this.rating = rating;
     this.commentsCount = comments.length;
-    this.isInWatchList = isInWatchList;
-    this.isWatched = isWatched;
-    this.isFavorite = isFavorite;
 
     // Данные для контролов карточки
     this.controlsData = getFilmControlsData({
