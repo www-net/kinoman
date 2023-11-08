@@ -1,6 +1,6 @@
 import FilmsList from "./films-list";
 import {MAX_CARDS_TOP} from '../const';
-import {createElement} from '../helpers/createElement';
+import {createElement} from '../helpers';
 
 // Создать списки фильмов
 export default class Films {

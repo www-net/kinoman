@@ -1,10 +1,6 @@
-import {getRuntime} from '../helpers/getRuntime';
-import {getFullDate} from '../helpers/getDateTime.js';
-import {getFilmControlsData} from '../helpers/getFilmControlsData';
-import {getPlurals} from '../helpers/getPlurals';
+import {createElement, getRuntime, getFullDate, getFilmControlsData, getPlurals} from '../helpers';
 import {AGE_RATINGS} from '../const';
 import Comments from './comments';
-import {createElement} from '../helpers/createElement';
 
 
 export default class Details {
