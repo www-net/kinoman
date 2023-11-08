@@ -1,35 +1,41 @@
 const controlsData = {
   watchlist: {
     key: `isInWatchList`,
-    variants: {
-      'no': `Add to watchlist`,
-      'yes': `Already in watchlist`,
+    getVariants(value) {
+      if (value) {
+        return `Already in watchlist`;
+      }
+      return `Add to watchlist`;
     }
   },
   watched: {
     key: `isWatched`,
-    variants: {
-      'no': `Mark as watched`,
-      'yes': `Already watched`,
+    getVariants(value) {
+      if (value) {
+        return `Already watched`;
+      }
+      return `Mark as watched`;
     }
   },
   favorite: {
     key: `isFavorite`,
-    variants: {
-      'no': `Add to favorites`,
-      'yes': `Already in favorites`,
+    getVariants(value) {
+      if (value) {
+        return `Already in favorites`;
+      }
+      return `Add to favorites`;
     }
   },
 };
 
 // Собрать данные для контролов
-// входящийм объектом будет {isInWatchList, isWatched, isFavorite}
+// входящим объектом будет {isInWatchList, isWatched, isFavorite}
 export const getFilmControlsData = (data) => {
   return Object.entries(controlsData)
     .map(([id, controlData]) => {
-      const {key, variants} = controlData;
+      const {key, getVariants} = controlData;
       const isActive = data[key];
-      const text = isActive ? variants.yes : variants.no;
+      const text = getVariants(isActive);
 
       return {
         id,
