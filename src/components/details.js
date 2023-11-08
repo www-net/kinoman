@@ -1,5 +1,5 @@
-import { createElement, getRuntime, getFullDate, getFilmControlsData, getPlurals } from '../helpers';
-import { AGE_RATINGS } from '../constants';
+import {createElement, getRuntime, getFullDate, getFilmControlsData, getPlurals} from '../helpers';
+import {AGE_RATINGS} from '../constants';
 import Comments from './comments';
 
 
@@ -120,7 +120,7 @@ export default class Details {
 
     // собрать строку
     const rowsMarkup = dataList
-      .reduce((prev, { name, value }) => {
+      .reduce((prev, {name, value}) => {
         return (
           `${prev}<tr class="film-details__row">
             <td class="film-details__term">${name}</td>
@@ -137,7 +137,7 @@ export default class Details {
   }
 
   // создать контрол
-  getDetailControl({ id, text, isActive }) {
+  getDetailControl({id, text, isActive}) {
     const checkedAttr = isActive ? `checked` : ``;
     return (
       `<input type="checkbox" class="film-details__control-input visually-hidden" id="${id}" name="${id}"
