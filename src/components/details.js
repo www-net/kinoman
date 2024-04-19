@@ -146,7 +146,7 @@ export default class Details {
   }
 
   // собрать секцию контролов
-  getDetailsControls() {
+  getDetailsControlsList() {
     const controlsMarkup = this.controlsData
       .reduce((prev, item) => {
         return prev + this.getDetailControl(item);
@@ -185,7 +185,7 @@ export default class Details {
           </div>
         </div>
 
-        ${this.getDetailsControls()}
+        ${this.getDetailsControlsList()}
 
       </div>
 
