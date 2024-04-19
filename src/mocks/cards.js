@@ -1,6 +1,8 @@
 import {EMOJIS, AGE_RATINGS} from '../constants';
 import {POSTERS, TITLES, SENTENCES, GENRES, NAMES, COUNTRIES} from './constants';
 
+const DESC_LENGTH = 140;
+
 // Выбор рандомного элемента из массива
 const getRandomItem = (list) => {
   return list[Math.floor(Math.random() * list.length)];
@@ -75,12 +77,12 @@ const getRandomComments = () => {
 
 // Описание фильма
 const getShortDesc = (desc) => {
-  if (desc.length < 140) {
+  if (desc.length < DESC_LENGTH) {
     return desc;
   }
 
   desc = desc
-    .substr(0, 139)
+    .substr(0, DESC_LENGTH - 1)
     .trim()
     .replace(/,$/g, ``);
 
