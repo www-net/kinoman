@@ -6,9 +6,6 @@ import {createElement} from "../helpers";
 export default class Films {
   constructor(data) {
     this._data = data;
-    this._element = createElement(`<section class="films"></section>`);
-
-    this._addSections();
   }
 
   _getTopRated() {
@@ -49,14 +46,28 @@ export default class Films {
     ];
   }
 
-  _addSections() {
+  _createElement() {
+    const element = createElement(this._getTmpl());
+
     for (const section of this._getSectionsData()) {
       const filmsSection = new FilmsList(section);
-      this._element.append(filmsSection.getElement());
+      element.append(filmsSection.getElement());
     }
+
+    return element;
+  }
+
+  _getTmpl() {
+    return (
+      `<section class="films"></section>`
+    );
   }
 
   getElement() {
+    if (!this._element) {
+      this._element = this._createElement();
+    }
+
     return this._element;
   }
 

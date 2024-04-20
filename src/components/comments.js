@@ -4,7 +4,6 @@ import {EMOJIS} from '../constants';
 export default class Comments {
   constructor(comments) {
     this._comments = comments;
-    this._element = createElement(this._getTmpl());
   }
 
   _getComment({author, text, emoji, date}) {
@@ -96,6 +95,9 @@ export default class Comments {
   }
 
   getElement() {
+    if (!this._element) {
+      this._element = createElement(this._getTmpl());
+    }
     return this._element;
   }
 
