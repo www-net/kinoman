@@ -36,13 +36,10 @@ export default class Card {
 
     this._element = createElement(this._getTmpl());
 
-
-    this._showDetails = this._showDetails.bind(this);
-    this._hideDetails = this._hideDetails.bind(this);
-
-    data.hideDetails = this._hideDetails;
     const details = new Details(data);
     this._detailsElement = details.getElement();
+
+    this._showDetails = this._showDetails.bind(this);
 
     this._addEvents();
   }
@@ -60,10 +57,6 @@ export default class Card {
 
   _showDetails() {
     document.body.append(this._detailsElement);
-  }
-
-  _hideDetails() {
-    this._detailsElement.remove();
   }
 
   // Создание контрола
