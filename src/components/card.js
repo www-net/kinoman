@@ -18,6 +18,7 @@ export default class Card {
       isFavorite
     } = data;
 
+    this._data = data;
     this._poster = poster;
     this._title = title;
     this._shortDesc = shortDesc;
@@ -36,8 +37,7 @@ export default class Card {
 
     this._element = createElement(this._getTmpl());
 
-    const details = new Details(data);
-    this._detailsElement = details.getElement();
+    this._detailsElement = this._getDetailsElement();
 
     this._showDetails = this._showDetails.bind(this);
 
@@ -50,13 +50,17 @@ export default class Card {
     const comments = this._element.querySelector(`.film-card__comments`);
     const elementsList = [poster, title, comments];
 
-    for (let element of elementsList) {
+    for (const element of elementsList) {
       element.addEventListener(`click`, this._showDetails);
     }
   }
 
   _showDetails() {
     document.body.append(this._detailsElement);
+  }
+  _getDetailsElement() {
+    const details = new Details(this._data);
+    return details.getElement();
   }
 
   // Создание контрола
