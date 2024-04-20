@@ -4,7 +4,7 @@ import Profile from './components/profile';
 import Filter from './components/filter.js';
 import Sort from './components/sort';
 import Films from './components/films';
-import FilmsTotal from './components/filmsTotal.js';
+import FilmsTotal from './components/films-total.js';
 import UserStats from './components/user-stats';
 
 import {getCardsData} from './mocks/cards';
