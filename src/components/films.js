@@ -4,62 +4,59 @@ import {createElement} from "../helpers";
 
 // Создать списки фильмов
 export default class Films {
-  // принимает массив объектов с данными для генерации карточек
   constructor(data) {
-    this.data = data;
-    this.element = createElement(`<section class="films"></section>`);
-    this.addSections();
+    this._data = data;
+    this._element = createElement(`<section class="films"></section>`);
+
+    this._addSections();
   }
 
-  getTopRated() {
-    const films = this.data.slice();
+  _getTopRated() {
+    const films = this._data.slice();
 
     films.sort((a, b) => {
       return b.rating - a.rating;
     });
-
     return films.slice(0, MAX_CARDS_TOP);
   }
 
-  getTopCommented() {
-    const films = this.data.slice();
+  _getTopCommented() {
+    const films = this._data.slice();
 
     films.sort((a, b) => {
       return b.comments.length - a.comments.length;
     });
-
     return films.slice(0, MAX_CARDS_TOP);
   }
 
-  // Данные для создания секций под фильмы
-  getSectionsData() {
+  _getSectionsData() {
     return [
       {
         type: `upcoming`,
         title: `All movies. Upcoming`,
-        films: this.data,
+        films: this._data
       },
       {
         type: `extra`,
         title: `Top rated`,
-        films: this.getTopRated(),
+        films: this._getTopRated()
       },
       {
         type: `extra`,
         title: `Most commented`,
-        films: this.getTopCommented(),
-      },
+        films: this._getTopCommented()
+      }
     ];
   }
 
-  addSections() {
-    for (const section of this.getSectionsData()) {
+  _addSections() {
+    for (const section of this._getSectionsData()) {
       const filmsSection = new FilmsList(section);
-      this.element.append(filmsSection.getElement());
+      this._element.append(filmsSection.getElement());
     }
   }
 
   getElement() {
-    return this.element;
+    return this._element;
   }
 }

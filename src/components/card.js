@@ -16,27 +16,27 @@ export default class Card {
     isFavorite
   }) {
 
-    this.poster = poster;
-    this.title = title;
-    this.shortDesc = shortDesc;
-    this.genre = genres[0];
-    this.year = releaseDate.getFullYear();
-    this.runtime = getRuntime(runtime);
-    this.rating = rating;
-    this.commentsCount = comments.length;
+    this._poster = poster;
+    this._title = title;
+    this._shortDesc = shortDesc;
+    this._genre = genres[0];
+    this._year = releaseDate.getFullYear();
+    this._runtime = getRuntime(runtime);
+    this._rating = rating;
+    this._commentsCount = comments.length;
 
     // Данные для контролов карточки
-    this.controlsData = getFilmControlsData({
+    this._controlsData = getFilmControlsData({
       isInWatchList,
       isWatched,
       isFavorite,
     });
 
-    this.element = createElement(this.getTmpl());
+    this._element = createElement(this._getTmpl());
   }
 
   // Создание контрола
-  getCardControl({id, text, isActive}) {
+  _getCardControl({id, text, isActive}) {
     const mods = [id];
 
     if (isActive) {
@@ -54,9 +54,9 @@ export default class Card {
   }
 
   // Добавление контролов в форму карточки
-  getCardForm() {
-    const controlsMarkup = this.controlsData
-      .reduce((prev, control) => prev + this.getCardControl(control), ``);
+  _getCardForm() {
+    const controlsMarkup = this._controlsData
+      .reduce((prev, control) => prev + this._getCardControl(control), ``);
 
     return (
       `<form class="film-card__controls">
@@ -66,36 +66,37 @@ export default class Card {
   }
 
   // Добавить множественное число комментариев в карточке
-  getCommentsLink() {
-    const commentsText = getPlurals(this.commentsCount, [`comment`, `comments`]);
+  _getCommentsLink() {
+    const commentsText = getPlurals(this._commentsCount, [`comment`, `comments`]);
+
     return (
-      `<a class="film-card__comments">${this.commentsCount} ${commentsText}</a>`
+      `<a class="film-card__comments">${this._commentsCount} ${commentsText}</a>`
     );
   }
 
   // Шаблон карточки
-  getTmpl() {
+  _getTmpl() {
     return (
       `<article class="film-card">
-        <h3 class="film-card__title">${this.title}</h3>
-        <p class="film-card__rating">${this.rating}</p>
+        <h3 class="film-card__title">${this._title}</h3>
+        <p class="film-card__rating">${this._rating}</p>
         <p class="film-card__info">
-          <span class="film-card__year">${this.year}</span>
-          <span class="film-card__duration">${this.runtime}</span>
-          <span class="film-card__genre">${this.genre}</span>
+          <span class="film-card__year">${this._year}</span>
+          <span class="film-card__duration">${this._runtime}</span>
+          <span class="film-card__genre">${this._genre}</span>
         </p>
         <img
-          src="./images/posters/${this.poster}"
-          alt="The poster of the film '${this.title}'"
+          src="./images/posters/${this._poster}"
+          alt="The poster of the film '${this._title}'"
           class="film-card__poster">
-        <p class="film-card__description">${this.shortDesc}</p>
-        ${this.getCommentsLink()}
-        ${this.getCardForm()}
+        <p class="film-card__description">${this._shortDesc}</p>
+        ${this._getCommentsLink()}
+        ${this._getCardForm()}
       </article>`
     );
   }
 
   getElement() {
-    return this.element;
+    return this._element;
   }
 }
