@@ -14,7 +14,7 @@ export default class FilmsList {
     this.shownQuantity = 0;
     this.ShowMoreBtn = this.getShowMoreBtn();
     this.filmsContainer = createElement(`<div class="films-list__container"></div>`);
-    this.elem = this.getSection();
+    this.element = this.createElement();
     this.addCards = this.addCards.bind(this);
 
     this.addCards();
@@ -98,22 +98,27 @@ export default class FilmsList {
     );
   }
 
-  getSection() {
+  getTmpl() {
+    return (
+      `<section class="${this.getClassName()}">
+        ${this.getTitle()}
+      </section>`
+    );
+  }
+
+  createElement() {
     if (this.films.length === 0) {
       return ``;
     }
-    const markup = `<section class="${this.getClassName()}">
-    ${this.getTitle()}
-  </section>`;
 
-    const section = createElement(markup);
-    section.append(this.filmsContainer);
-    section.append(this.ShowMoreBtn);
+    const element = createElement(this.getTmpl());
+    element.append(this.filmsContainer);
+    element.append(this.ShowMoreBtn);
 
-    return section;
+    return element;
   }
 
   getElement() {
-    return this.elem;
+    return this.element;
   }
 }

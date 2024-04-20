@@ -1,14 +1,14 @@
 import FilmsList from "./films-list";
-import {MAX_CARDS_TOP} from '../constants';
-import {createElement} from '../helpers';
+import {MAX_CARDS_TOP} from "../constants";
+import {createElement} from "../helpers";
 
 // Создать списки фильмов
 export default class Films {
-
   // принимает массив объектов с данными для генерации карточек
   constructor(data) {
     this.data = data;
-    this.elem = createElement(`<section class="films"></section>`);
+    this.element = createElement(`<section class="films"></section>`);
+    this.addSections();
   }
 
   getTopRated() {
@@ -37,28 +37,29 @@ export default class Films {
       {
         type: `upcoming`,
         title: `All movies. Upcoming`,
-        films: this.data
+        films: this.data,
       },
       {
         type: `extra`,
         title: `Top rated`,
-        films: this.getTopRated()
+        films: this.getTopRated(),
       },
       {
         type: `extra`,
         title: `Most commented`,
-        films: this.getTopCommented()
-      }
+        films: this.getTopCommented(),
+      },
     ];
   }
 
-  getElement() {
+  addSections() {
     for (const section of this.getSectionsData()) {
       const filmsSection = new FilmsList(section);
-      this.elem.append(filmsSection.getElement());
+      this.element.append(filmsSection.getElement());
     }
+  }
 
-    return this.elem;
+  getElement() {
+    return this.element;
   }
 }
-

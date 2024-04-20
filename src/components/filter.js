@@ -26,6 +26,8 @@ export default class Filter {
         name: `Favorites`
       },
     ];
+
+    this.element = createElement(this.getTmpl());
   }
 
   getItems() {
@@ -54,14 +56,19 @@ export default class Filter {
     }, ``);
   }
 
-  getElement() {
-    const markup = `<nav class="main-navigation">
-    <div class="main-navigation__items">
-    ${this.getItems()}
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`;
+  getTmpl() {
+    return (
+      `<nav class="main-navigation">
+        <div class="main-navigation__items">
+          ${this.getItems()}
+        </div>
+        <a href="#stats"
+          class="main-navigation__additional">Stats</a>
+      </nav>`
+    );
+  }
 
-    return createElement(markup);
+  getElement() {
+    return this.element;
   }
 }

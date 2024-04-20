@@ -4,6 +4,7 @@ export default class Sort {
   constructor(currentSort) {
     this.currentSort = currentSort || `default`;
     this.sections = [`default`, `date`, `rating`];
+    this.element = createElement(this.getTmpl());
   }
 
   getItems() {
@@ -22,13 +23,13 @@ export default class Sort {
     }, ``);
   }
 
+  getTmpl() {
+    return (
+      `<ul class="sort">${this.getItems()}</ul>`
+    );
+  }
+
   getElement() {
-    const markup = `<ul class="sort">
-
-    ${this.getItems()}
-
-  </ul>`;
-
-    return createElement(markup);
+    return this.element;
   }
 }

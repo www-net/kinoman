@@ -9,6 +9,7 @@ export default class UserStats {
     this.watchedQuantity = watchedQuantity;
     this.watchedDuration = watchedDuration;
     this.topGenre = topGenre;
+    this.element = createElement(this.getTmpl());
   }
 
   getRank() {
@@ -133,18 +134,22 @@ export default class UserStats {
     }, ``);
   }
 
-  getElement() {
-    const markup = `<section class="statistic" _hidden>
-    ${this.getRank()}
-    ${this.getFilter()}
-    <ul class="statistic__text-list">
-      ${this.getStatisticsItems()}
-    </ul>
-    <div class="statistic__chart-wrap">
-      <canvas class="statistic__chart" width="1000"></canvas>
-    </div>
-  </section>`;
+  getTmpl() {
+    return (
+      `<section class="statistic" hidden>
+        ${this.getRank()}
+        ${this.getFilter()}
+        <ul class="statistic__text-list">
+          ${this.getStatisticsItems()}
+        </ul>
+        <div class="statistic__chart-wrap">
+          <canvas class="statistic__chart" width="1000"></canvas>
+        </div>
+      </section>`
+    );
+  }
 
-    return createElement(markup);
+  getElement() {
+    return this.element;
   }
 }
