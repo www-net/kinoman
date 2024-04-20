@@ -4,7 +4,6 @@ import Profile from './components/profile';
 import Filter from './components/filter.js';
 import Sort from './components/sort';
 import Films from './components/films';
-import Details from './components/details';
 import FilmsTotal from './components/filmsTotal.js';
 import UserStats from './components/user-stats';
 
@@ -22,7 +21,6 @@ const profile = new Profile(userData);
 const filter = new Filter({cardsData, currentFilter: `all`});
 const sort = new Sort();
 const films = new Films(cardsData);
-const details = new Details(cardsData[0]);
 const userStats = new UserStats({userData, currentFilter: `all-time`});
 const filmsTotal = new FilmsTotal(cardsData.length);
 
@@ -38,4 +36,3 @@ render(siteMainElem, userStats.getElement());
 
 render(filmsTotalElem, filmsTotal.getElement());
 
-render(document.body, details.getElement());
