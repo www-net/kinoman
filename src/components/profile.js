@@ -24,4 +24,8 @@ export default class Profile {
   getElement() {
     return this._element;
   }
+
+  removeElement() {
+    this._element = null;
+  }
 }
