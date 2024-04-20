@@ -1,12 +1,12 @@
-import {getRelativeDate} from '../helpers';
+import {getRelativeDate, createElement} from '../helpers';
 import {EMOJIS} from '../constants';
 
 export default class Comments {
   constructor(comments) {
-    this.comments = comments;
+    this._comments = comments;
   }
 
-  getComment({author, text, emoji, date}) {
+  _getComment({author, text, emoji, date}) {
     return (
       `<span class="film-details__comment-emoji">
       <img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">
@@ -23,16 +23,16 @@ export default class Comments {
     );
   }
 
-  getCommentsList() {
-    if (this.comments.length === 0) {
+  _getCommentsList() {
+    if (this._comments.length === 0) {
       return ``;
     }
 
-    const commentsMarkup = this.comments
+    const commentsMarkup = this._comments
       .reduce((prev, item) => {
         return (
           `${prev}<li class="film-details__comment">
-            ${this.getComment(item)}
+            ${this._getComment(item)}
           </li>`
         );
       }, ``);
@@ -44,7 +44,7 @@ export default class Comments {
     );
   }
 
-  getEmojiControl(name) {
+  _getEmojiControl(name) {
     return (
       `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${name}" value="${name}">
         <label class="film-details__emoji-label" for="emoji-${name}">
@@ -53,9 +53,9 @@ export default class Comments {
     );
   }
 
-  getEmojiControls() {
+  _getEmojiControls() {
     const emojiControls = EMOJIS.reduce((prev, item) => {
-      return prev + this.getEmojiControl(item);
+      return prev + this._getEmojiControl(item);
     }, ``);
 
     return (
@@ -65,30 +65,44 @@ export default class Comments {
     );
   }
 
-  getCommentForm() {
+  _getCommentForm() {
     return (
       `<div class="film-details__new-comment">
       <div for="add-emoji" class="film-details__add-emoji-label"></div>
       <label class="film-details__comment-label">
         <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
       </label>
-      ${this.getEmojiControls()}
+      ${this._getEmojiControls()}
     </div>`
     );
   }
 
-  getTmpl() {
+  _getTmpl() {
     return (
       `<div class="form-details__bottom-container">
-      <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this.comments.length}</span></h3>
-        ${this.getCommentsList()}
-
-        ${this.getCommentForm()}
-
-      </section>
-    </div>`
+        <section class="film-details__comments-wrap">
+          <h3 class="film-details__comments-title">
+            Comments
+            <span class="film-details__comments-count">
+              ${this._comments.length}
+            </span>
+          </h3>
+          ${this._getCommentsList()}
+          ${this._getCommentForm()}
+        </section>
+      </div>`
     );
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this._getTmpl());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
   }
 }
 

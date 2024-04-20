@@ -2,10 +2,10 @@ import {createElement} from '../helpers';
 
 export default class Filter {
   constructor({cardsData, currentFilter}) {
-    this.data = cardsData;
-    this.currentFilter = currentFilter || `all`;
+    this._data = cardsData;
+    this._currentFilter = currentFilter || `all`;
 
-    this.sections = [
+    this._sections = [
       {
         id: `all`,
         name: `All movies`
@@ -28,21 +28,21 @@ export default class Filter {
     ];
   }
 
-  getItems() {
-    return this.sections.reduce((prev, section) => {
+  _getItems() {
+    return this._sections.reduce((prev, section) => {
       const {id, key, name} = section;
       let counter = 0;
       let counterMarkup = ``;
       let className = `main-navigation__item`;
 
       if (key) {
-        counter = this.data.filter((item) => item[key]).length;
+        counter = this._data.filter((item) => item[key]).length;
         counterMarkup = `<span class="main-navigation__item-count">
           ${counter}
         </span>`;
       }
 
-      if (id === this.currentFilter) {
+      if (id === this._currentFilter) {
         className += ` ${className}--active`;
       }
 
@@ -54,14 +54,27 @@ export default class Filter {
     }, ``);
   }
 
-  getElement() {
-    const markup = `<nav class="main-navigation">
-    <div class="main-navigation__items">
-    ${this.getItems()}
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`;
+  _getTmpl() {
+    return (
+      `<nav class="main-navigation">
+        <div class="main-navigation__items">
+          ${this._getItems()}
+        </div>
+        <a href="#stats"
+          class="main-navigation__additional">Stats</a>
+      </nav>`
+    );
+  }
 
-    return createElement(markup);
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this._getTmpl());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
   }
 }
