@@ -1,8 +1,10 @@
-import {getRelativeDate, createElement} from '../helpers';
+import AbstractComponent from './abstract-component';
+import {getRelativeDate} from '../helpers';
 import {EMOJIS} from '../constants';
 
-export default class Comments {
+export default class Comments extends AbstractComponent {
   constructor(comments) {
+    super();
     this._comments = comments;
   }
 
@@ -92,17 +94,6 @@ export default class Comments {
         </section>
       </div>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this._getTmpl());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

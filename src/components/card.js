@@ -1,7 +1,8 @@
+import AbstractComponent from './abstract-component';
 import {getClass, getRuntime, getFilmControlsData, createElement, getPlurals} from '../helpers';
 import Details from './details';
 
-export default class Card {
+export default class Card extends AbstractComponent {
 
   constructor(data) {
     const {
@@ -17,6 +18,7 @@ export default class Card {
       isWatched,
       isFavorite
     } = data;
+    super();
 
     this._data = data;
     this._poster = poster;
@@ -40,14 +42,14 @@ export default class Card {
     this._showDetails = this._showDetails.bind(this);
   }
 
-  _addEvents() {
-    const poster = this._element.querySelector(`.film-card__poster`);
-    const title = this._element.querySelector(`.film-card__title`);
-    const comments = this._element.querySelector(`.film-card__comments`);
-    const elementsList = [poster, title, comments];
+  _addEvents(element) {
+    const poster = element.querySelector(`.film-card__poster`);
+    const title = element.querySelector(`.film-card__title`);
+    const comments = element.querySelector(`.film-card__comments`);
+    const controlsList = [poster, title, comments];
 
-    for (const element of elementsList) {
-      element.addEventListener(`click`, this._showDetails);
+    for (const control of controlsList) {
+      control.addEventListener(`click`, this._showDetails);
     }
   }
 
@@ -120,16 +122,10 @@ export default class Card {
     );
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this._getTmpl());
-      this._addEvents();
-    }
+  _createElement() {
+    const element = createElement(this._getTmpl());
+    this._addEvents(element);
 
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+    return element;
   }
 }

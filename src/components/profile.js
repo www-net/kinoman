@@ -1,7 +1,8 @@
-import {createElement} from '../helpers';
+import AbstractComponent from './abstract-component';
 
-export default class Profile {
+export default class Profile extends AbstractComponent {
   constructor({status, avatar}) {
+    super();
     this._status = status;
     this._avatar = avatar;
   }
@@ -17,17 +18,5 @@ export default class Profile {
           width="35" height="35">
       </section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this._getTmpl());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

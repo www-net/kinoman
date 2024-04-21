@@ -1,9 +1,11 @@
+import AbstractComponent from './abstract-component';
 import Card from './card';
 import {createElement} from '../helpers';
 import {MAX_CARDS_SHOW, MAX_CARDS_LOAD} from '../constants';
 
-export default class FilmsList {
+export default class FilmsLis extends AbstractComponent {
   constructor({type, title, films}) {
+    super();
     this._title = title;
     this._type = type;
     this._films = films;
@@ -113,16 +115,5 @@ export default class FilmsList {
     this._addEvents();
 
     return element;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = this._createElement();
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

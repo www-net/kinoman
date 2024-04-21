@@ -1,10 +1,11 @@
-import FilmsList from "./films-list";
-import {MAX_CARDS_TOP} from "../constants";
-import {createElement} from "../helpers";
+import AbstractComponent from './abstract-component';
+import FilmsList from './films-list';
+import {createElement} from '../helpers';
+import {MAX_CARDS_TOP} from '../constants';
 
-// Создать списки фильмов
-export default class Films {
+export default class Films extends AbstractComponent {
   constructor(data) {
+    super();
     this._data = data;
   }
 
@@ -61,17 +62,5 @@ export default class Films {
     return (
       `<section class="films"></section>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = this._createElement();
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
