@@ -1,5 +1,5 @@
 import AbstractComponent from './abstract-component';
-import {getClass, getRuntime, getFilmControlsData, createElement, getPlurals} from '../helpers';
+import {getClass, getRuntime, getFilmControlsData, createElement, getPlurals, renderElement} from '../helpers';
 import Details from './details';
 
 export default class Card extends AbstractComponent {
@@ -37,7 +37,7 @@ export default class Card extends AbstractComponent {
       isFavorite,
     });
 
-    this._detailsElement = this._getDetailsElement();
+    this._details = new Details(this._data);
 
     this._showDetails = this._showDetails.bind(this);
   }
@@ -54,11 +54,7 @@ export default class Card extends AbstractComponent {
   }
 
   _showDetails() {
-    document.body.append(this._detailsElement);
-  }
-  _getDetailsElement() {
-    const details = new Details(this._data);
-    return details.getElement();
+    renderElement(document.body, this._details);
   }
 
   // Создание контрола
