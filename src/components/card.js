@@ -1,6 +1,12 @@
 import AbstractComponent from './abstract-component';
-import {getClass, getRuntime, getFilmControlsData, createElement, getPlurals, renderElement} from '../helpers';
+import CardControls from './card-controls';
 import Details from './details';
+import {
+  getRuntime,
+  createElement,
+  getPlurals,
+  renderElement
+} from '../helpers';
 
 export default class Card extends AbstractComponent {
 
@@ -14,9 +20,6 @@ export default class Card extends AbstractComponent {
       runtime,
       rating,
       comments,
-      isInWatchList,
-      isWatched,
-      isFavorite
     } = data;
     super();
 
@@ -30,12 +33,7 @@ export default class Card extends AbstractComponent {
     this._rating = rating;
     this._commentsCount = comments.length;
 
-    // Данные для контролов карточки
-    this._controlsData = getFilmControlsData({
-      isInWatchList,
-      isWatched,
-      isFavorite,
-    });
+    this._cardControls = new CardControls(data);
 
     this._details = new Details(this._data);
 
@@ -55,36 +53,6 @@ export default class Card extends AbstractComponent {
 
   _showDetails() {
     renderElement(document.body, this._details);
-  }
-
-  // Создание контрола
-  _getCardControl({id, text, isActive}) {
-    const mods = [id];
-
-    if (isActive) {
-      mods.push(`active`);
-    }
-
-    const className = getClass({
-      base: `film-card__controls-item`,
-      mods
-    });
-
-    return (
-      `<button class="${className}">${text}</button>`
-    );
-  }
-
-  // Добавление контролов в форму карточки
-  _getCardForm() {
-    const controlsMarkup = this._controlsData
-      .reduce((prev, control) => prev + this._getCardControl(control), ``);
-
-    return (
-      `<form class="film-card__controls">
-        ${controlsMarkup}
-      </form>`
-    );
   }
 
   // Добавить множественное число комментариев в карточке
@@ -113,13 +81,13 @@ export default class Card extends AbstractComponent {
           class="film-card__poster">
         <p class="film-card__description">${this._shortDesc}</p>
         ${this._getCommentsLink()}
-        ${this._getCardForm()}
       </article>`
     );
   }
 
   _createElement() {
     const element = createElement(this._getTmpl());
+    renderElement(element, this._cardControls);
     this._addEvents(element);
 
     return element;
