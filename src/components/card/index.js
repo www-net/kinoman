@@ -1,6 +1,6 @@
 import AbstractComponent from '../abstract-component';
 import Controls from './controls';
-import Details from '../details/index';
+import Details from '../details';
 import {
   getRuntime,
   createElement,
