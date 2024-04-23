@@ -12,8 +12,6 @@ export default class Details extends AbstractComponent {
   constructor(data) {
     super();
 
-    this._hideDetails = this._hideDetails.bind(this);
-
     this._closeBtn = new CloseBtn();
     this._poster = new Poster(data);
     this._desc = new Desc(data);
@@ -21,6 +19,9 @@ export default class Details extends AbstractComponent {
     this._table = new Table(data);
     this._comments = new Comments(data);
     this._controls = new Controls(data);
+
+    this._hideDetails = this._hideDetails.bind(this);
+    this._closeBtn.setClickHandler(this._hideDetails);
   }
 
   _hideDetails() {
@@ -45,7 +46,6 @@ export default class Details extends AbstractComponent {
     const element = createElement(`<div class="form-details__top-container"></div>`);
 
     renderElement(element, this._closeBtn);
-    this._closeBtn.setClickHandler(this._hideDetails);
 
     renderElement(element, this._getInfoContainer());
     renderElement(element, this._controls);
