@@ -23,7 +23,6 @@ export default class Card extends AbstractComponent {
     } = data;
     super();
 
-    this._data = data;
     this._poster = poster;
     this._title = title;
     this._shortDesc = shortDesc;
@@ -35,7 +34,7 @@ export default class Card extends AbstractComponent {
 
     this._controls = new Controls(data);
 
-    this._details = new Details(this._data);
+    this._details = new Details(data);
 
     this._showDetails = this._showDetails.bind(this);
   }
