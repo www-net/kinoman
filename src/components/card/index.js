@@ -10,7 +10,7 @@ import {
 
 export default class Card extends AbstractComponent {
 
-  constructor(data) {
+  constructor(filmData) {
     const {
       poster,
       title,
@@ -20,7 +20,7 @@ export default class Card extends AbstractComponent {
       runtime,
       rating,
       comments,
-    } = data;
+    } = filmData;
     super();
 
     this._poster = poster;
@@ -32,9 +32,9 @@ export default class Card extends AbstractComponent {
     this._rating = rating;
     this._commentsCount = comments.length;
 
-    this._controls = new Controls(data);
+    this._controls = new Controls(filmData);
 
-    this._details = new Details(data);
+    this._details = new Details(filmData);
 
     this._showDetails = this._showDetails.bind(this);
   }
