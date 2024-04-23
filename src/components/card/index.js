@@ -55,17 +55,10 @@ export default class Card extends AbstractComponent {
     renderElement(document.body, this._details);
   }
 
-  // Добавить множественное число комментариев в карточке
-  _getCommentsLink() {
-    const commentsText = getPlurals(this._commentsCount, [`comment`, `comments`]);
-
-    return (
-      `<a class="film-card__comments">${this._commentsCount} ${commentsText}</a>`
-    );
-  }
-
-  // Шаблон карточки
   _getTmpl() {
+    const commentsText = getPlurals(this._commentsCount, [`comment`, `comments`]);
+    const commentsLinkMarkup = `<a class="film-card__comments">${this._commentsCount} ${commentsText}</a>`;
+
     return (
       `<article class="film-card">
         <h3 class="film-card__title">${this._title}</h3>
@@ -80,7 +73,7 @@ export default class Card extends AbstractComponent {
           alt="The poster of the film '${this._title}'"
           class="film-card__poster">
         <p class="film-card__description">${this._shortDesc}</p>
-        ${this._getCommentsLink()}
+        ${commentsLinkMarkup}
       </article>`
     );
   }
