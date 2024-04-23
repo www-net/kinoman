@@ -1,7 +1,8 @@
-import {createElement} from '../helpers';
+import AbstractComponent from './abstract-component';
 
-export default class Filter {
+export default class Filter extends AbstractComponent {
   constructor({cardsData, currentFilter}) {
+    super();
     this._data = cardsData;
     this._currentFilter = currentFilter || `all`;
 
@@ -64,17 +65,5 @@ export default class Filter {
           class="main-navigation__additional">Stats</a>
       </nav>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this._getTmpl());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

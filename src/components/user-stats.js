@@ -1,7 +1,8 @@
-import {createElement} from '../helpers';
+import AbstractComponent from './abstract-component';
 
-export default class UserStats {
+export default class UserStats extends AbstractComponent {
   constructor({userData, currentFilter}) {
+    super();
     const {status, avatar, watchedQuantity, watchedDuration, topGenre} = userData;
     this._currentFilter = currentFilter || `all-time`;
     this._status = status;
@@ -9,8 +10,6 @@ export default class UserStats {
     this._watchedQuantity = watchedQuantity;
     this._watchedDuration = watchedDuration;
     this._topGenre = topGenre;
-
-    this._element = createElement(this._getTmpl());
   }
 
   _getRank() {
@@ -144,13 +143,5 @@ export default class UserStats {
         </div>
       </section>`
     );
-  }
-
-  getElement() {
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
