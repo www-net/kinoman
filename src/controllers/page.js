@@ -1,9 +1,7 @@
 import FilterController from './filter';
 import FilmsListController from './films-list';
 import Sort from '../components/sort';
-
 import {createElement, renderElement, sortByRating, sortByDate, sortByComments} from '../helpers';
-
 import {MAX_CARDS_TOP, MAX_CARDS_SHOW, MAX_CARDS_LOAD} from '../constants';
 export default class PageController {
   constructor(container) {
@@ -15,24 +13,19 @@ export default class PageController {
     this._shownQuantity = 0;
     this._currentFilter = ``;
     this._currentSort = ``;
-
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
     this._changeUpcomingSorting = this._changeUpcomingSorting.bind(this);
     this._changeUpcomingFiltering = this._changeUpcomingFiltering.bind(this);
     this._loadMoreUpcoming = this._loadMoreUpcoming.bind(this);
   }
-
   _getSortedFilms(sortFunc) {
     const films = this._films.slice();
     films.sort(sortFunc);
-
     return films;
   }
-
   _getFilmsSortedByProp(prop) {
     let films = [];
-
     switch (prop) {
       case `rating`:
         films = this._getSortedFilms(sortByRating);
@@ -46,20 +39,15 @@ export default class PageController {
       default:
         films = this._films.slice();
     }
-
     return films;
   }
-
   _getFilteredFilms(filterProp) {
     const films = this._films.slice();
-
     if (!filterProp || filterProp === `all`) {
       return films;
     }
-
     return films.filter((item) => item[filterProp]);
   }
-
   _getActualFilmsList() {
     if (this._currentFilter) {
       return this._getFilteredFilms(this._currentFilter);
@@ -67,25 +55,20 @@ export default class PageController {
     if (this._currentSort) {
       return this._getFilmsSortedByProp(this._currentSort);
     }
-
     return this._films.slice();
   }
-
   _getUpcoming(quantity = MAX_CARDS_LOAD) {
     const films = this._getActualFilmsList();
     const nextQuantity = this._shownQuantity + quantity;
     const cuttedFilms = films.slice(this._shownQuantity, nextQuantity);
     this._shownQuantity = nextQuantity;
-
     if (this._shownQuantity >= films.length) {
       this._upcomingListController.hideMoreBtn();
     } else {
       this._upcomingListController.showMoreBtn();
     }
-
     return cuttedFilms;
   }
-
   _getTopRated() {
     let films = this._getFilmsSortedByProp(`rating`);
     films = films.slice(0, MAX_CARDS_TOP);
@@ -131,25 +114,24 @@ export default class PageController {
     upcomingFilmsContainer.innerHTML = ``;
     this._upcomingFilmsControllers = [];
     this._shownQuantity = 0;
-
     this._upcomingFilmsControllers = this._upcomingListController.renderCards(this._getUpcoming());
     this._allFilmsControllers = this._collectAllFilmsControllers();
   }
 
-  _changeUpcomingSorting(prop) {
+  _changeUpcomingSorting(sort) {
     this._currentFilter = ``;
-    this._currentSort = prop;
+    this._currentSort = sort;
 
     this._filterController.reset();
     this._updateUpcoming();
   }
 
-  _changeUpcomingFiltering(filterProp) {
-    this._currentFilter = filterProp;
+  _changeUpcomingFiltering(filter) {
+    this._currentFilter = filter;
     this._currentSort = ``;
 
     this._sort.reset();
-    this._filterController.setCurrentFilter(filterProp);
+    this._filterController.setCurrentFilter(filter);
     this._updateUpcoming();
   }
 
@@ -176,30 +158,25 @@ export default class PageController {
     filmsControllersToUpdate.forEach((item) => {
       item.render(newData);
     });
-
     this._filterController.render(this._films);
   }
-
   _onViewChange() {
     this._allFilmsControllers.forEach((item) => item.setDefaultView());
   }
-
   render(filmsData) {
     this._films = filmsData;
     this._filterController = new FilterController(this._container, this._changeUpcomingFiltering);
     this._sort = new Sort();
     const filmsSection = this._getFilmsSection();
-
     this._sort.setClickHandler(this._changeUpcomingSorting);
-
     this._filterController.render(this._films);
-
     renderElement(this._container, [
       this._sort,
       filmsSection
     ]);
 
     this._upcomingFilmsControllers = this._upcomingListController.render(this._getUpcoming(MAX_CARDS_SHOW));
+
     if (this._films.length > MAX_CARDS_SHOW) {
       this._upcomingListController.showMoreBtn();
     }
