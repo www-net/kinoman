@@ -4,26 +4,27 @@ import Form from './form';
 import {createElement, renderElement} from '../../helpers';
 
 export default class Comments extends AbstractComponent {
-  constructor({comments}) {
+  constructor({selectedEmoji, comments}) {
     super();
 
     this._comments = comments;
     this._commentsList = new CommentsList(comments);
-    this._form = new Form();
+    this._form = new Form({selectedEmoji});
+  }
+
+  setEmojiClickHandler(handler) {
+    this._form.setEmojiClickHandler(handler);
   }
 
   _createElement() {
     const element = createElement(this._getTmpl());
     const wrapper = element.querySelector(`.film-details__comments-wrap`);
-
     renderElement(wrapper, [
       this._commentsList,
       this._form
     ]);
-
     return element;
   }
-
   _getTmpl() {
     return (
       `<div class="form-details__bottom-container">
