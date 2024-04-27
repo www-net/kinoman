@@ -147,9 +147,14 @@ export default class PageController {
       this._upcomingListController.hideMoreBtn();
     }
   }
+
   _onDataChange(oldData, newData) {
     const filmIndex = this._films.findIndex((item) => item === oldData);
+    const isNeedToUpdateFiltered = this._currentFilter
+    && oldData[this._currentFilter] !== newData[this._currentFilter]
+    && newData[this._currentFilter] === false;
     const filmsControllersToUpdate = this._allFilmsControllers.filter((item) => item.filmData === oldData);
+
     if (filmIndex < 0) {
       return;
     }
@@ -157,15 +162,22 @@ export default class PageController {
     if (filmsControllersToUpdate.length === 0) {
       return;
     }
+
     // Update all cards with film in all sections
     filmsControllersToUpdate.forEach((item) => {
       item.render(newData);
     });
     this._filterController.render(this._films);
+
+    if (isNeedToUpdateFiltered) {
+      this._updateUpcoming();
+    }
   }
+
   _onViewChange() {
     this._allFilmsControllers.forEach((item) => item.setDefaultView());
   }
+
   render(filmsData) {
     this._films = filmsData;
     this._filterController = new FilterController(this._container, this._changeUpcomingFiltering);
