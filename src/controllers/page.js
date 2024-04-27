@@ -115,6 +115,7 @@ export default class PageController {
         {type: `extra`, title: `Top commented`}
     );
   }
+
   _collectAllFilmsControllers() {
     return [].concat(
         this._upcomingFilmsControllers,
@@ -123,12 +124,13 @@ export default class PageController {
     );
   }
 
-  _updateUpcoming() {
+  _updateUpcoming(quantity) {
     const upcomingFilmsContainer = this._upcomingListController.getFilmsContainerElement();
+
     upcomingFilmsContainer.innerHTML = ``;
     this._upcomingFilmsControllers = [];
     this._shownQuantity = 0;
-    this._upcomingFilmsControllers = this._upcomingListController.renderCards(this._getUpcoming());
+    this._upcomingFilmsControllers = this._upcomingListController.renderCards(this._getUpcoming(quantity));
     this._allFilmsControllers = this._collectAllFilmsControllers();
   }
 
@@ -177,7 +179,7 @@ export default class PageController {
     this._filterController.render(this._films);
 
     if (isNeedToUpdateFiltered) {
-      this._updateUpcoming();
+      this._updateUpcoming(this._upcomingFilmsControllers.length);
     }
   }
 
