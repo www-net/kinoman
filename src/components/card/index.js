@@ -1,15 +1,8 @@
 import AbstractComponent from '../abstract-component';
 import Controls from './controls';
-import Details from '../details';
-import {
-  getRuntime,
-  createElement,
-  getPlurals,
-  renderElement
-} from '../../helpers';
+import {getRuntime, createElement, renderElement, getPlurals} from '../../helpers';
 
 export default class Card extends AbstractComponent {
-
   constructor(filmData) {
     const {
       poster,
@@ -22,7 +15,6 @@ export default class Card extends AbstractComponent {
       comments,
     } = filmData;
     super();
-
     this._poster = poster;
     this._title = title;
     this._shortDesc = shortDesc;
@@ -33,31 +25,30 @@ export default class Card extends AbstractComponent {
     this._commentsCount = comments.length;
 
     this._controls = new Controls(filmData);
-
-    this._details = new Details(filmData);
-
-    this._showDetails = this._showDetails.bind(this);
+    this._cardClickHandler = null;
   }
 
-  _addEvents(element) {
+  setCardClickHandler(handler) {
+    const element = this.getElement();
     const poster = element.querySelector(`.film-card__poster`);
     const title = element.querySelector(`.film-card__title`);
     const comments = element.querySelector(`.film-card__comments`);
     const controlsList = [poster, title, comments];
 
     for (const control of controlsList) {
-      control.addEventListener(`click`, this._showDetails);
+      control.addEventListener(`click`, handler);
     }
+
+    this._cardClickHandler = handler;
   }
 
-  _showDetails() {
-    renderElement(document.body, this._details);
+  setControlsClickHandler(handler) {
+    this._controls.setClickHandler(handler);
   }
 
   _getTmpl() {
     const commentsText = getPlurals(this._commentsCount, [`comment`, `comments`]);
     const commentsLinkMarkup = `<a class="film-card__comments">${this._commentsCount} ${commentsText}</a>`;
-
     return (
       `<article class="film-card">
         <h3 class="film-card__title">${this._title}</h3>
@@ -76,11 +67,9 @@ export default class Card extends AbstractComponent {
       </article>`
     );
   }
-
   _createElement() {
     const element = createElement(this._getTmpl());
     renderElement(element, this._controls);
-    this._addEvents(element);
 
     return element;
   }
