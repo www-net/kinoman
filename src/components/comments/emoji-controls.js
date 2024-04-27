@@ -1,4 +1,5 @@
 import AbstractComponent from '../abstract-component';
+import {getHandlerWithValue} from '../../helpers';
 import {EMOJIS} from '../../constants';
 
 export default class EmojiControls extends AbstractComponent {
@@ -9,20 +10,9 @@ export default class EmojiControls extends AbstractComponent {
     this._selectedEmoji = selectedEmoji;
   }
 
-  _getClickHandler(handler) {
-    return () => {
-      const control = event.target.closest(`.film-details__emoji-item`);
-
-      if (!control) {
-        return;
-      }
-
-      handler(control.value);
-    };
-  }
 
   setClickHandler(handler) {
-    const clickHandler = this._getClickHandler(handler);
+    const clickHandler = getHandlerWithValue(`.film-details__emoji-item`, handler);
     this.getElement().addEventListener(`click`, clickHandler);
   }
 
