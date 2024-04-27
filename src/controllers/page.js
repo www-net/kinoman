@@ -3,6 +3,7 @@ import FilmsListController from './films-list';
 import Sort from '../components/sort';
 import {createElement, renderElement, sortByRating, sortByDate, sortByComments} from '../helpers';
 import {MAX_CARDS_TOP, MAX_CARDS_SHOW, MAX_CARDS_LOAD} from '../constants';
+
 export default class PageController {
   constructor(container) {
     this._container = container;
