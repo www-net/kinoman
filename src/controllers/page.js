@@ -81,7 +81,10 @@ export default class PageController {
     return films;
   }
   _getFilmsSection() {
-    const element = createElement(`<section class="films"></section>`);
+    return createElement(`<section class="films"></section>`);
+  }
+
+  _initFilmsControllers(element) {
     this._upcomingListController = new FilmsListController(
         element,
         this._onDataChange,
@@ -101,7 +104,6 @@ export default class PageController {
         this._onViewChange,
         {type: `extra`, title: `Top commented`}
     );
-    return element;
   }
   _collectAllFilmsControllers() {
     return [].concat(
@@ -169,6 +171,8 @@ export default class PageController {
     this._filterController = new FilterController(this._container, this._changeUpcomingFiltering);
     this._sort = new Sort();
     const filmsSection = this._getFilmsSection();
+    this._initFilmsControllers(filmsSection);
+
     this._sort.setClickHandler(this._changeUpcomingSorting);
     this._filterController.render(this._films);
     renderElement(this._container, [
