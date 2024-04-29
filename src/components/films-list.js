@@ -1,12 +1,22 @@
-import AbstractComponent from './abstract-component';
+import AbstractSmartComponent from './abstract-smart-component';
 
-export default class FilmsList extends AbstractComponent {
+export default class FilmsList extends AbstractSmartComponent {
+
   constructor({type, title}) {
     super();
 
-    this._title = title;
-    this._type = type;
+    this._title = title || ``;
+    this._type = type || ``;
     this._isUpcoming = this._type === `upcoming`;
+  }
+
+  setTitle(title) {
+    this._title = title;
+    this.rerender();
+  }
+
+  _recoveryListeners() {
+
   }
 
   _getClassName() {
@@ -16,6 +26,7 @@ export default class FilmsList extends AbstractComponent {
     }
     return className;
   }
+
   _getTitle() {
     let className = `films-list__title`;
     if (this._isUpcoming) {
@@ -27,6 +38,7 @@ export default class FilmsList extends AbstractComponent {
       </h2>`
     );
   }
+
   _getTmpl() {
     return (
       `<section class="${this._getClassName()}">
