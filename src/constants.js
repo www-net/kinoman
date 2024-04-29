@@ -28,6 +28,25 @@ const USER_STATUSES = [
   },
 ];
 
+const FILTERS = {
+  all: {
+    id: `all`,
+    name: `All movies`
+  },
+  isInWatchList: {
+    id: `watchlist`,
+    name: `Watchlist`
+  },
+  isWatched: {
+    id: `history`,
+    name: `History`
+  },
+  isFavorite: {
+    id: `favorites`,
+    name: `Favorites`
+  },
+};
+
 const MAX_CARDS_TOP = 2;
 const MAX_CARDS_SHOW = 5;
 const MAX_CARDS_LOAD = 5;
@@ -36,6 +55,7 @@ export {
   EMOJIS,
   AGE_RATINGS,
   USER_STATUSES,
+  FILTERS,
   MAX_CARDS_TOP,
   MAX_CARDS_SHOW,
   MAX_CARDS_LOAD
