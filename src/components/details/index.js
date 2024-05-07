@@ -32,6 +32,15 @@ export default class Details extends AbstractSmartComponent {
     this._controls.setClickHandler(handler);
   }
 
+  setCommentsActionsHandler(handler) {
+    this._comments.setActionsHandler(handler);
+    this._commentsActionsHandler = handler;
+  }
+
+  destroyEvents() {
+    this._comments.destroyEvents();
+  }
+
   reset() {
     if (!this._filmData.selectedEmoji) {
       return;
@@ -42,7 +51,10 @@ export default class Details extends AbstractSmartComponent {
         {selectedEmoji: null}
     );
 
+    this._comments.destroyEvents();
     this._comments = new Comments(this._filmData);
+
+    this.setCommentsActionsHandler(this._commentsActionsHandler);
 
     this.rerender();
   }
