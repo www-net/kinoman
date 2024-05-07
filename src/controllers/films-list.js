@@ -40,28 +40,23 @@ export default class FilmsListController {
     });
   }
 
-  getFilmsContainerElement() {
-    return this._filmsListComponent.getFilmsContainerElement();
-  }
-
   showNoFilmsMessage(text) {
+    this._emptyFilmsComponent.setTitle(text);
+    this._isFilmsMessageShown = true;
 
     if (!this._filmsListComponent) {
+      renderElement(this._container, this._emptyFilmsComponent);
       return;
     }
 
-    this._emptyFilmsComponent.setTitle(text);
-    replaceElement(this._filmsListComponent, this._emptyFilmsComponent);
-    this._isFilmsMessageShown = true;
+    replaceElement(this._emptyFilmsComponent, this._filmsListComponent);
+    this._isFilmsMessageShown = false;
   }
 
   hideNoFilmsMessage() {
     if (!this._isFilmsMessageShown) {
       return;
     }
-
-    replaceElement(this._emptyFilmsComponent, this._filmsListComponent);
-    this._isFilmsMessageShown = false;
   }
 
   render(films) {
