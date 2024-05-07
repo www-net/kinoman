@@ -17,7 +17,6 @@ export default class SortController {
 
   _setSortType(sortType) {
     this._filmsModel.setSortType(sortType);
-    this._currentSort = sortType;
   }
 
   _onSortChange() {
