@@ -61,7 +61,7 @@ export default class FilmsListController {
 
   render(films) {
     this._filmsListComponent = new FilmsListComponent(this._props);
-    this._filmsContainerElement = this.getFilmsContainerElement();
+    this._filmsContainerElement = this._filmsListComponent.getFilmsContainerElement();
 
     renderElement(this._filmsListComponent.getElement(), this._moreBtn);
     renderElement(this._container, this._filmsListComponent);
