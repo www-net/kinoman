@@ -28,23 +28,36 @@ const USER_STATUSES = [
   },
 ];
 
+const FilterType = {
+  ALL: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+};
+
 const FILTERS = {
-  all: {
-    id: `all`,
+  [FilterType.ALL]: {
     name: `All movies`
   },
-  isInWatchList: {
-    id: `watchlist`,
+  [FilterType.WATCHLIST]: {
+    prop: `isInWatchList`,
     name: `Watchlist`
   },
-  isWatched: {
-    id: `history`,
+  [FilterType.HISTORY]: {
+    prop: `isWatched`,
     name: `History`
   },
-  isFavorite: {
-    id: `favorites`,
+  [FilterType.FAVORITES]: {
+    prop: `isFavorite`,
     name: `Favorites`
   },
+};
+
+const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `raiting`,
+  COMMENTS: `comments`
 };
 
 const MAX_CARDS_TOP = 2;
@@ -55,7 +68,9 @@ export {
   EMOJIS,
   AGE_RATINGS,
   USER_STATUSES,
+  FilterType,
   FILTERS,
+  SortType,
   MAX_CARDS_TOP,
   MAX_CARDS_SHOW,
   MAX_CARDS_LOAD
