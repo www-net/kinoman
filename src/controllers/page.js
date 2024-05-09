@@ -91,7 +91,7 @@ export default class PageController {
   }
 
   _removeControllers(prop) {
-    this._openedFilmsControllers = this[prop].filter((item) => item.detailsIsOpened);
+    const openedFilmsControllers = this[prop].filter((item) => item.detailsIsOpened);
 
     this[prop].forEach((item) => {
       if (!item.detailsIsOpened) {
@@ -99,7 +99,7 @@ export default class PageController {
       }
     });
 
-    this[prop] = this._openedFilmsControllers;
+    this[prop] = openedFilmsControllers;
   }
 
   _updateUpcoming(quantity) {
@@ -195,13 +195,7 @@ export default class PageController {
     });
 
     if (isNeedToUpdateFiltered) {
-      let quantityToShow = this._upcomingFilmsControllers.length;
-
-      if (this._isNeedToHideUpdatedCard) {
-        quantityToShow -= this._openedFilmsControllers.length;
-      }
-
-      this._updateUpcoming(quantityToShow);
+      this._updateUpcoming(this._shownQuantity);
     }
 
     if (isNeedToUpdateTopCommented) {
