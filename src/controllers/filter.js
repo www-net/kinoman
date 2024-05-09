@@ -18,7 +18,12 @@ export default class FilterController {
   }
 
   _setFilterType(filterType) {
+    if (this._currentFilter === filterType) {
+      return;
+    }
+
     this._filmsModel.setFilterType(filterType);
+    this._currentFilter = filterType;
   }
 
   _onDataChange() {
@@ -26,7 +31,13 @@ export default class FilterController {
   }
 
   _onFilterChange() {
-    this._currentFilter = this._filmsModel.getFilterType();
+    const newFilter = this._filmsModel.getFilterType();
+
+    if (newFilter === this._currentFilter) {
+      return;
+    }
+
+    this._currentFilter = newFilter;
     this.render();
   }
 
