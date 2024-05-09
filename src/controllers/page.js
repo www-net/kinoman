@@ -106,6 +106,26 @@ export default class PageController {
     this._allFilmsControllers = this._collectAllFilmsControllers();
   }
 
+  _removeTopCommentedFilmsControllers() {
+    this._topCommentedFilmsControllers.forEach((item) => item.destroy());
+    this._topCommentedFilmsControllers = [];
+  }
+
+  _updateTopCommented() {
+    const films = this._getTopCommented();
+    this._removeTopCommentedFilmsControllers();
+
+    if (films.length === 0) {
+      const message = `There are no movies with comments"`;
+      this._topCommentedListController.showNoFilmsMessage(message);
+      return;
+    }
+
+    this._topCommentedListController.hideNoFilmsMessage();
+    this._topCommentedFilmsControllers = this._topCommentedListController.renderCards(films);
+    this._allFilmsControllers = this._collectAllFilmsControllers();
+  }
+
   _onSortChange() {
     this._updateUpcoming();
   }
@@ -146,6 +166,7 @@ export default class PageController {
     }
 
     const isNeedToUpdateFiltered = this._checkIsNeedToUpdateFiltered(oldData, newData);
+    const isNeedToUpdateTopCommented = oldData.comments.length < newData.comments.length;
     const filmsControllersToUpdate = this._allFilmsControllers.filter((item) => item.filmData.id === oldData.id);
 
     if (filmsControllersToUpdate.length === 0) {
@@ -160,6 +181,11 @@ export default class PageController {
     if (isNeedToUpdateFiltered) {
       this._updateUpcoming(this._upcomingFilmsControllers.length);
     }
+
+    if (isNeedToUpdateTopCommented) {
+      this._updateTopCommented();
+    }
+
   }
 
   _onViewChange() {
