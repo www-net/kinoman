@@ -4,11 +4,7 @@ export const getFilmsByFilter = (films, filterType) => {
   switch (filterType) {
     case FilterType.ALL:
       return films;
-    case FilterType.WATCHLIST:
-    case FilterType.HISTORY:
-    case FilterType.FAVORITES:
-      return films.filter((item) => item[FILTERS[filterType].prop]);
+    default:
+      return films.filter((item) => item[FILTERS[filterType].propName]);
   }
-
-  return films;
 };

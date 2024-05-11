@@ -1,6 +1,4 @@
-import FilterController from './filter';
 import FilmsListController from './films-list';
-import Sort from './sort';
 import {FilterType, FILTERS} from '../constants';
 
 import {createElement, renderElement, getFilmsSortedByProp} from '../helpers';
@@ -41,14 +39,24 @@ export default class PageController {
   }
 
   _getTopRated() {
-    let films = getFilmsSortedByProp(this._filmsModel.getFilms(), SortType.RATING);
+    let films = getFilmsSortedByProp(this._filmsModel.getFilmsAll(), SortType.RATING);
     films = films.slice(0, MAX_CARDS_TOP);
     return films;
   }
 
   _getTopCommented() {
-    let films = getFilmsSortedByProp(this._filmsModel.getFilms(), SortType.COMMENTS);
+    let filmsWithComments = this._filmsModel
+    .getFilmsAll()
+    .filter((item) => item.comments.length > 0);
+
+    if (filmsWithComments.length === 0) {
+      return [];
+    }
+
+    let films = getFilmsSortedByProp(filmsWithComments, SortType.COMMENTS);
+
     films = films.slice(0, MAX_CARDS_TOP);
+
     return films;
   }
 
@@ -82,9 +90,16 @@ export default class PageController {
     );
   }
 
-  _removeUpcomingFilmsControllers() {
-    this._upcomingFilmsControllers.forEach((item) => item.destroy());
-    this._upcomingFilmsControllers = [];
+  _removeControllers(prop) {
+    const openedFilmsControllers = this[prop].filter((item) => item.detailsIsOpened);
+
+    this[prop].forEach((item) => {
+      if (!item.detailsIsOpened) {
+        item.destroy();
+      }
+    });
+
+    this[prop] = openedFilmsControllers;
   }
 
   _updateUpcoming(quantity) {
@@ -92,17 +107,37 @@ export default class PageController {
     this._shownQuantity = 0;
 
     const films = this._getUpcoming(quantity);
-    this._removeUpcomingFilmsControllers();
+    this._removeControllers(`_upcomingFilmsControllers`);
+    this._upcomingListController.clearSavedData();
 
     if (films.length === 0) {
-      this._upcomingListController.showNoFilmsMessage(`There are no movies for filter "${FILTERS[this._filmsModel.getFilterType()].name}"`);
+      const filterName = FILTERS[this._filmsModel.getFilterType()].name;
+      const message = `There are no movies for filter "${filterName}"`;
+      this._upcomingListController.showNoFilmsMessage(message);
       return;
     }
 
     this._upcomingListController.hideNoFilmsMessage();
 
-    this._upcomingFilmsControllers = this._upcomingListController.renderCards(films);
+    const newControls = this._upcomingListController.renderCards(films);
+    this._upcomingFilmsControllers = this._upcomingFilmsControllers.concat(newControls);
 
+    this._allFilmsControllers = this._collectAllFilmsControllers();
+  }
+
+  _updateTopCommented() {
+    const films = this._getTopCommented();
+    this._removeControllers(`_topCommentedFilmsControllers`);
+    this._topCommentedListController.clearSavedData();
+
+    if (films.length === 0) {
+      this._topCommentedListController.hide();
+      return;
+    }
+
+    this._topCommentedListController.show();
+    const newControllers = this._topCommentedListController.renderCards(films);
+    this._topCommentedFilmsControllers = this._topCommentedFilmsControllers.concat(newControllers);
     this._allFilmsControllers = this._collectAllFilmsControllers();
   }
 
@@ -120,7 +155,7 @@ export default class PageController {
     this._upcomingFilmsControllers = this._upcomingFilmsControllers.concat(newControllers);
     this._allFilmsControllers = this._collectAllFilmsControllers();
 
-    if (this._shownQuantity >= this._filmsModel.getFilms().length) {
+    if (this._shownQuantity >= this._filmsModel.getFilmsQuantity()) {
       this._upcomingListController.hideMoreBtn();
     }
   }
@@ -132,10 +167,11 @@ export default class PageController {
       return false;
     }
 
-    const filterProp = FILTERS[currentFilter].prop;
+    const filterPropName = FILTERS[currentFilter].propName;
 
-    return oldData[filterProp] !== newData[filterProp]
-      && newData[filterProp] === false;
+    const isNeedToUpdateFiltered = oldData[filterPropName] !== newData[filterPropName];
+    this._isNeedToHideUpdatedCard = isNeedToUpdateFiltered && newData[filterPropName] === false;
+    return isNeedToUpdateFiltered;
   }
 
   _onDataChange(oldData, newData) {
@@ -146,6 +182,7 @@ export default class PageController {
     }
 
     const isNeedToUpdateFiltered = this._checkIsNeedToUpdateFiltered(oldData, newData);
+    const isNeedToUpdateTopCommented = oldData.comments.length !== newData.comments.length;
     const filmsControllersToUpdate = this._allFilmsControllers.filter((item) => item.filmData.id === oldData.id);
 
     if (filmsControllersToUpdate.length === 0) {
@@ -158,8 +195,13 @@ export default class PageController {
     });
 
     if (isNeedToUpdateFiltered) {
-      this._updateUpcoming(this._upcomingFilmsControllers.length);
+      this._updateUpcoming(this._shownQuantity);
     }
+
+    if (isNeedToUpdateTopCommented) {
+      this._updateTopCommented();
+    }
+
   }
 
   _onViewChange() {
@@ -167,23 +209,19 @@ export default class PageController {
   }
 
   render() {
-    const films = this._filmsModel.getFilms();
-    this._filterController = new FilterController(this._container, this._filmsModel);
-    this._sortController = new Sort(this._container, this._filmsModel);
+    const filmsQuantity = this._filmsModel.getFilmsQuantity();
     const filmsSection = createElement(`<section class="films"></section>`);
     this._initFilmsControllers(filmsSection);
-    this._filterController.render();
-    this._sortController.render();
     renderElement(this._container, filmsSection);
 
-    if (films.length === 0) {
+    if (filmsQuantity === 0) {
       this._upcomingListController.showNoFilmsMessage(`There are no movies in our database`);
       return;
     }
 
     this._upcomingFilmsControllers = this._upcomingListController.render(this._getUpcoming(MAX_CARDS_SHOW));
 
-    if (films.length > MAX_CARDS_SHOW) {
+    if (filmsQuantity > MAX_CARDS_SHOW) {
       this._upcomingListController.showMoreBtn();
     }
     this._topRatedFilmsControllers = this._topRatedListController.render(this._getTopRated());

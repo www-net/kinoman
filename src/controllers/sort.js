@@ -8,19 +8,38 @@ export default class SortController {
     this._filmsModel = filmsModel;
     this._currentSort = SortType.DEFAULT;
 
+    this._setSortType = this._setSortType.bind(this);
+
     this._onSortChange = this._onSortChange.bind(this);
+
+    this._filmsModel.addSortChangeHandler(this._onSortChange);
   }
 
-  _onSortChange(sort) {
-    this._filmsModel.setSortType(sort);
-    this._currentSort = sort;
+  _setSortType(sortType) {
+    if (this._currentSort === sortType) {
+      return;
+    }
+
+    this._filmsModel.setSortType(sortType);
+    this._currentSort = sortType;
+  }
+
+  _onSortChange() {
+    const newSort = this._filmsModel.getSortType();
+
+    if (newSort === this._currentSort) {
+      return;
+    }
+
+    this._currentSort = newSort;
+    this.render();
   }
 
   render() {
     const oldSortComponent = this._sortComponent;
     this._sortComponent = new Sort(this._currentSort);
 
-    this._sortComponent.setClickHandler(this._onSortChange);
+    this._sortComponent.setClickHandler(this._setSortType);
 
     if (oldSortComponent) {
       replaceElement(oldSortComponent, this._sortComponent);

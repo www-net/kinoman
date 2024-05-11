@@ -22,6 +22,10 @@ export default class Films {
     return this._films;
   }
 
+  getFilmsQuantity() {
+    return this._films.length;
+  }
+
   setFilms(films) {
     this._films = films;
   }
@@ -38,6 +42,10 @@ export default class Films {
   setSortType(sortType) {
     this._activeSortType = sortType;
     this._callHandlers(this._sortChangeHandlers);
+  }
+
+  getSortType() {
+    return this._activeSortType;
   }
 
   addDataChangeHandler(handler) {
