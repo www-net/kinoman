@@ -20,7 +20,10 @@ export default class Details extends AbstractSmartComponent {
     this._table = new Table(filmData);
     this._comments = new Comments(filmData);
     this._controls = new Controls(filmData);
+
     this.setEmoji = this.setEmoji.bind(this);
+    this.setText = this.setText.bind(this);
+
     this._addEvents();
   }
 
@@ -46,12 +49,9 @@ export default class Details extends AbstractSmartComponent {
       return;
     }
 
-    this._filmData = Object.assign(
-        this._filmData,
-        {selectedEmoji: null}
-    );
+    this.resetComment();
 
-    this._comments.removeEvents();
+    this.removeEvents();
     this._comments = new Comments(this._filmData);
 
     this.setCommentsActionsHandler(this._commentsActionsHandler);
@@ -59,19 +59,33 @@ export default class Details extends AbstractSmartComponent {
     this.rerender();
   }
 
+  resetComment() {
+    this._filmData = Object.assign(
+        this._filmData,
+        {
+          selectedEmoji: null,
+          commentText: ``
+        }
+    );
+  }
+
   setEmoji(emoji = ``) {
     this._filmData = Object.assign(
         this._filmData,
         {selectedEmoji: emoji}
     );
+  }
 
-    this._comments = new Comments(this._filmData);
-
-    this.rerender();
+  setText(text = ``) {
+    this._filmData = Object.assign(
+        this._filmData,
+        {commentText: text}
+    );
   }
 
   _addEvents() {
     this._comments.setEmojiClickHandler(this.setEmoji);
+    this._comments.setTextInputHandler(this.setText);
   }
 
   _recoveryListeners() {
