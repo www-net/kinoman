@@ -1,4 +1,4 @@
-import AbstractComponent from './abstract-component';
+import AbstractSmartComponent from './abstract-smart-component';
 import {getHandlerWithProp} from '../helpers';
 import {SortType} from '../constants';
 
@@ -6,7 +6,7 @@ const classes = {
   default: `sort__button`,
   active: `sort__button--active`
 };
-export default class Sort extends AbstractComponent {
+export default class Sort extends AbstractSmartComponent {
   constructor(currentSort) {
     super();
 
