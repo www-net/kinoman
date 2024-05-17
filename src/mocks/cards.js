@@ -25,12 +25,7 @@ const getDesc = () => {
 
 // Продолжительность фильма
 const getRandomDuration = () => {
-  const hours = Math.floor(Math.random() * 2) + 1;
-  const mins = Math.floor(Math.random() * 60);
-  return {
-    hours,
-    mins
-  };
+  return Math.floor(Math.random() * 120) + 60;
 };
 
 // Рейтинг
