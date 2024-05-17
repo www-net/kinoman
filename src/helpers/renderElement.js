@@ -1,4 +1,9 @@
 const handleComponent = (target, component) => {
+
+  if (!component) {
+    return;
+  }
+
   if (component instanceof HTMLElement) {
     target.append(component);
 
