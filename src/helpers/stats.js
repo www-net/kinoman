@@ -1,12 +1,19 @@
-import {USER_STATUSES, StatsFilter} from '../constants';
+import {USER_STATUSES, StatsFilter, FilterType} from '../constants';
+import {getFilmsByFilter} from './getFilmsByFilter';
+import moment from 'moment';
+
+export const getWatched = (films) => {
+  return getFilmsByFilter(films, FilterType.HISTORY);
+};
 
 export const getTotalDuration = (watchedFilms) => {
   const totalTimeMins = watchedFilms.reduce((prev, {runtime}) => {
-    return prev + runtime.hours * 60 + runtime.mins;
+    return prev + runtime;
   }, 0);
 
-  let mins = totalTimeMins % 60;
-  const hours = (totalTimeMins - mins) / 60;
+  const duration = moment.duration(totalTimeMins, `minutes`);
+  let hours = duration.hours();
+  let mins = duration.minutes();
 
   if (mins > 0 && mins < 10) {
     mins = `0${mins}`;
@@ -61,15 +68,10 @@ export const getWatchedByPeriod = (watchedFilms, periodName) => {
       date.setDate(date.getDate() - 1);
       break;
     default:
-      date = null;
+      return watchedFilms;
   }
 
-  if (date) {
-    const films = watchedFilms.filter((item) => item.watchedDate > date);
-    return films;
-  }
-
-  return watchedFilms;
+  return watchedFilms.filter((item) => item.watchedDate > date);
 };
 
 export const getUserStatus = (watchedQuantity) => {

@@ -4,6 +4,18 @@ import {POSTERS, TITLES, SENTENCES, GENRES, NAMES, COUNTRIES} from './constants'
 
 const DESC_LENGTH = 140;
 
+const WATCHED_RANDOM_DATE_PARAMS = {
+  yearsOffset: 2,
+  monthsOffset: 3,
+  daysOffset: 3
+};
+
+const RANDOM_COMMENTS_DATE_PARAMS = {yearsOffset: 5};
+
+const DEFAULT_YEARS_OFFSET = 30;
+const DEFAULT_MONTHS_OFFSET = 12;
+const DEFAULT_DAYS_OFFSET = 31;
+
 // Выбор рандомного элемента из массива
 const getRandomItem = (list) => {
   return list[Math.floor(Math.random() * list.length)];
@@ -25,12 +37,7 @@ const getDesc = () => {
 
 // Продолжительность фильма
 const getRandomDuration = () => {
-  const hours = Math.floor(Math.random() * 2) + 1;
-  const mins = Math.floor(Math.random() * 60);
-  return {
-    hours,
-    mins
-  };
+  return Math.floor(Math.random() * 120) + 60;
 };
 
 // Рейтинг
@@ -41,15 +48,19 @@ const getRandomRating = () => {
 };
 
 // Дата
-const getRandomDate = (sizeOffset = `month`) => {
+const getRandomNum = (max) => {
+  return Math.floor(Math.random() * max);
+};
+
+const getRandomDate = (params = {}) => {
+  const {yearsOffset = DEFAULT_YEARS_OFFSET,
+    monthsOffset = DEFAULT_MONTHS_OFFSET,
+    daysOffset = DEFAULT_DAYS_OFFSET} = params;
   const now = new Date();
-  const offset = Math.floor(Math.random() * 30);
 
-  now.setDate(now.getDate() - offset);
-
-  if (sizeOffset === `years`) {
-    now.setFullYear(now.getFullYear() - offset);
-  }
+  now.setDate(now.getDate() - getRandomNum(daysOffset));
+  now.setMonth(now.getMonth() - getRandomNum(monthsOffset));
+  now.setFullYear(now.getFullYear() - getRandomNum(yearsOffset));
 
   return now;
 };
@@ -63,7 +74,7 @@ const getRandomComments = () => {
     const id = getRandomID();
     const author = getRandomItem(NAMES);
     const text = getRandomItem(SENTENCES);
-    const date = getRandomDate();
+    const date = getRandomDate(RANDOM_COMMENTS_DATE_PARAMS);
     const emoji = getRandomItem(EMOJIS);
 
     list.push({
@@ -116,13 +127,14 @@ const getCardsData = (quantity) => {
     const desc = getDesc();
     const shortDesc = getShortDesc(desc);
     const genres = getRandomList(GENRES, 1, 3);
-    const releaseDate = getRandomDate(`years`);
+    const releaseDate = getRandomDate();
     const runtime = getRandomDuration();
     const rating = getRandomRating();
     const comments = getRandomComments();
     const isInWatchList = Math.random() > 0.5;
     const isWatched = Math.random() > 0.5;
     const isFavorite = Math.random() > 0.5;
+    const watchedDate = isWatched ? getRandomDate(WATCHED_RANDOM_DATE_PARAMS) : null;
     const ageRating = getRandomItem(Object.keys(AGE_RATINGS));
     const country = getRandomItem(COUNTRIES);
     const director = getRandomItem(NAMES);
@@ -148,7 +160,8 @@ const getCardsData = (quantity) => {
       actors,
       isInWatchList,
       isWatched,
-      isFavorite
+      isFavorite,
+      watchedDate
     });
   }
 

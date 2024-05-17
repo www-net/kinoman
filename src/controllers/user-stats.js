@@ -1,13 +1,13 @@
 import UserStats from '../components/user-stats';
-import {renderElement, replaceElement, getFilmsByFilter, getTotalDuration, getWatchedByGenre, getWatchedByPeriod} from '../helpers';
-import {FilterType} from '../constants';
+import {renderElement, replaceElement, getWatched, getTotalDuration, getWatchedByGenre, getWatchedByPeriod} from '../helpers';
+import {StatsFilter} from '../constants';
 
 export default class UserStatsController {
   constructor(container, filmsModel, userModel) {
     this._container = container;
     this._filmsModel = filmsModel;
     this._userModel = userModel;
-    this._currentFilter = `all-time`;
+    this._currentFilter = StatsFilter.ALL_TIME;
 
     this._onDataChange = this._onDataChange.bind(this);
     this._setPeriod = this._setPeriod.bind(this);
@@ -35,7 +35,7 @@ export default class UserStatsController {
 
   _getUserData() {
     const {status, avatar} = this._userModel.getUser();
-    const watched = getFilmsByFilter(this._filmsModel.getFilmsAll(), FilterType.HISTORY);
+    const watched = getWatched(this._filmsModel.getFilmsAll());
     const watchedByPeriod = getWatchedByPeriod(watched, this._currentFilter);
     const watchedDuration = getTotalDuration(watchedByPeriod);
     const watchedByGenre = getWatchedByGenre(watchedByPeriod);
